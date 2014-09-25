@@ -1,4 +1,4 @@
 generations
 ===========
 
-Hereditary train simulator.
+Hereditary trait simulator.
