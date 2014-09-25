@@ -75,14 +75,14 @@ func selectValue(ability string, fatherValue float64, motherValue float64) (floa
 		}
 	}
 	if (fatherValue > 2.0 && motherValue <= 2.0) || (motherValue > 2.0 && fatherValue <= 2.0) {
-		if multiplierValue := float64(int(fatherValue * motherValue)); multiplierValue > 1.0 {
+		if multiplierValue := float64(int(fatherValue * motherValue)); multiplierValue > 3.0 {
 			return float64(int(fatherValue * motherValue)), nil
 		} else {
-			return 0.0, errors.New(fmt.Sprintf("Cannot thrive.  %v is less than 1.", ability))
+			return 3.0, nil
 		}
 
 	}
-	return 3.0, nil
+	return 0.0, errors.New(fmt.Sprintf("Cannot thrive because of extremely low %v.", ability))
 }
 
 func GenerateTraits(gender string) Trait {
@@ -102,7 +102,17 @@ func GetValue() float64 {
 	rand.Seed(time.Now().UnixNano())
 	scoreType := float64(rand.Intn(10)) + 1.0
 	if scoreType == 1 {
-		return float64(rand.Intn(2000)) / 1000.0
+		key := rand.Intn(8)
+		multivals := make(map[int]float64)
+		multivals[0] = 0.25
+		multivals[1] = 0.5
+		multivals[2] = 0.75
+		multivals[3] = 1.0
+		multivals[4] = 1.25
+		multivals[5] = 1.5
+		multivals[6] = 1.75
+		multivals[7] = 2.0
+		return multivals[key]
 	} else {
 		return float64(rand.Intn(16)) + 3.0
 	}
