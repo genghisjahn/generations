@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -50,12 +49,6 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person.Mother = motherTrait
 	for key, _ := range fatherTrait.Abilities {
 		err := errors.New("")
-		if fatherTrait.Abilities[key] <= 2.0 {
-			fmt.Println("Father multi: ", key, fatherTrait.Abilities[key])
-		}
-		if motherTrait.Abilities[key] <= 2.0 {
-			fmt.Println("Mother multi: ", key, motherTrait.Abilities[key])
-		}
 		if person.Abilities[key], err = selectValue(fatherTrait.Abilities[key], motherTrait.Abilities[key]); err != nil {
 			return person, err
 		}
