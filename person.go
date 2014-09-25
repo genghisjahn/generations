@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -47,18 +48,25 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person.Abilities = make(map[string]float64)
 	person.Father = fatherTrait
 	person.Mother = motherTrait
+	errText := ""
 	for key, _ := range fatherTrait.Abilities {
 		err := errors.New("")
-		if person.Abilities[key], err = selectValue(fatherTrait.Abilities[key], motherTrait.Abilities[key]); err != nil {
-			return person, err
+		if person.Abilities[key], err = selectValue(key, fatherTrait.Abilities[key], motherTrait.Abilities[key]); err != nil {
+			errText += fmt.Sprintf("%v\n", err)
 		}
 
 	}
+
 	person.Gender = GetGender()
-	return person, nil
+	if errText == "" {
+		return person, nil
+	} else {
+		return person, errors.New(errText)
+	}
+
 }
 
-func selectValue(fatherValue float64, motherValue float64) (float64, error) {
+func selectValue(ability string, fatherValue float64, motherValue float64) (float64, error) {
 	if fatherValue > 2 && motherValue > 2 {
 		if fatherValue >= motherValue {
 			return fatherValue, nil
@@ -70,7 +78,7 @@ func selectValue(fatherValue float64, motherValue float64) (float64, error) {
 		if multiplierValue := float64(int(fatherValue * motherValue)); multiplierValue > 1.0 {
 			return float64(int(fatherValue * motherValue)), nil
 		} else {
-			return 0.0, errors.New("Cannot thrive.  Value is less than 1.")
+			return 0.0, errors.New(fmt.Sprintf("Cannot thrive.  %v is less than 1.", ability))
 		}
 
 	}

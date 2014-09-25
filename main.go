@@ -20,22 +20,19 @@ func main() {
 	trait2Mother := GenerateTraits("X")
 
 	person1, _ := GeneratePerson(trait1Father, trait1Mother)
+	person1.Gender = "Y"
 	person2, _ := GeneratePerson(trait2Father, trait2Mother)
-	PrintPerson("#1", person1, keys)
-	PrintPerson("#2", person2, keys)
-	if person1.Gender != person2.Gender {
-		for i := 0; i < 10; i++ {
-			child := Person{}
-			if person1.Gender == "X" {
-				child, _ = Procreate(person1, person2)
-			} else {
-				child, _ = Procreate(person2, person1)
-			}
+	person2.Gender = "X"
+	PrintPerson("Father", person1, keys)
+	PrintPerson("Mother", person2, keys)
+	for i := 0; i < 10; i++ {
+		if child, chldErr := Procreate(person1, person2); chldErr == nil {
 			PrintPerson(fmt.Sprintf("Child %v", i+1), child, keys)
+		} else {
+			fmt.Printf("----------\n")
+			fmt.Printf("Child %v, something didn't go right.\n%v\n", i+1, chldErr)
 		}
 
-	} else {
-		fmt.Println("Try again.")
 	}
 }
 
