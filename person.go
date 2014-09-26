@@ -10,6 +10,7 @@ import (
 type Trait struct {
 	Abilities map[string]float64
 	Gender    string
+	EyeColor  string
 }
 
 type Person struct {
@@ -35,6 +36,7 @@ func (p *Person) GetContributionTraits() Trait {
 			result.Abilities[key] = p.Mother.Abilities[key]
 		}
 	}
+
 	if p.Gender == "X" {
 		result.Gender = "X"
 	} else {
@@ -56,7 +58,6 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 		}
 
 	}
-
 	person.Gender = GetGender()
 	if errText == "" {
 		return person, nil

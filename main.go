@@ -41,6 +41,7 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Println(name)
 	for _, k := range keys {
 		fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
+		//fmt.Printf("%v: %v \n", k, p.Abilities[k])
 	}
 	fmt.Println("Gender:", p.Gender)
 }
