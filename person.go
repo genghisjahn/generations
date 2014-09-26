@@ -9,7 +9,14 @@ import (
 
 type Trait struct {
 	Abilities map[string]float64
+	Alleles   map[string]Allele
 	Gender    string
+	EyeColor  string
+}
+
+type Allele struct {
+	Paternal bool
+	Maternal bool
 }
 
 type Person struct {
@@ -27,12 +34,21 @@ func Procreate(father Person, mother Person) (Person, error) {
 func (p *Person) GetContributionTraits() Trait {
 	result := Trait{}
 	result.Abilities = make(map[string]float64)
+	result.Alleles = make(map[string]Allele)
 	for key, _ := range p.Father.Abilities {
 		pick := rand.Float64()
 		if pick <= .5 {
 			result.Abilities[key] = p.Father.Abilities[key]
 		} else {
 			result.Abilities[key] = p.Mother.Abilities[key]
+		}
+	}
+	for key, _ := range p.Father.Alleles {
+		pick := rand.Float64()
+		if pick <= .5 {
+			result.Alleles[key] = p.Father.Alleles[key]
+		} else {
+			result.Alleles[key] = p.Mother.Alleles[key]
 		}
 	}
 	if p.Gender == "X" {
@@ -46,6 +62,7 @@ func (p *Person) GetContributionTraits() Trait {
 func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person := Person{}
 	person.Abilities = make(map[string]float64)
+	person.Alleles = make(map[string]Allele)
 	person.Father = fatherTrait
 	person.Mother = motherTrait
 	errText := ""
@@ -56,14 +73,35 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 		}
 
 	}
+	for key, _ := range fatherTrait.Alleles {
+		person.Alleles[key] = selectAllele(fatherTrait.Alleles[key], motherTrait.Alleles[key])
+	}
 
 	person.Gender = GetGender()
+	person.setEyeColor()
 	if errText == "" {
 		return person, nil
 	} else {
 		return person, errors.New(errText)
 	}
 
+}
+
+func selectAllele(fatherAllele Allele, motherAllele Allele) Allele {
+	rand.Seed(time.Now().UnixNano())
+	allele := Allele{}
+	if result := rand.Intn(2) == 1; result {
+		allele.Paternal = fatherAllele.Paternal
+	} else {
+		allele.Paternal = fatherAllele.Maternal
+	}
+
+	if result := rand.Intn(2) == 1; result {
+		allele.Maternal = motherAllele.Paternal
+	} else {
+		allele.Maternal = motherAllele.Maternal
+	}
+	return allele
 }
 
 func selectValue(ability string, fatherValue float64, motherValue float64) (float64, error) {
@@ -95,7 +133,15 @@ func GenerateTraits(gender string) Trait {
 	trait.Abilities["5_constitution"] = GetValue()
 	trait.Abilities["6_charisma"] = GetValue()
 	trait.Gender = gender
+	trait.Alleles = GenerateAlleles()
 	return trait
+}
+
+func GenerateAlleles() map[string]Allele {
+	alleles := make(map[string]Allele)
+	alleles["ec1"] = GetAllele()
+	alleles["ec2"] = GetAllele()
+	return alleles
 }
 
 func GetValue() float64 {
@@ -118,6 +164,22 @@ func GetValue() float64 {
 	}
 }
 
+func GetAllele() Allele {
+	allele := Allele{}
+	rand.Seed(time.Now().UnixNano())
+	if result := rand.Intn(2) == 1; result {
+		allele.Paternal = true
+	} else {
+		allele.Paternal = false
+	}
+	if result := rand.Intn(2) == 1; result {
+		allele.Maternal = true
+	} else {
+		allele.Maternal = false
+	}
+	return allele
+}
+
 func GetGender() string {
 	rand.Seed(time.Now().UnixNano())
 	if gender := rand.Intn(2) == 1; gender {
@@ -125,4 +187,21 @@ func GetGender() string {
 	} else {
 		return "X"
 	}
+}
+
+func (p *Person) setEyeColor() {
+	ec1 := p.Alleles["ec1"]
+	ec2 := p.Alleles["ec2"]
+	eyecolor := ""
+	if ec1.Paternal || ec1.Maternal {
+		eyecolor = "brown"
+	} else {
+		if ec2.Paternal || ec2.Maternal {
+			eyecolor = "green"
+		} else {
+			eyecolor = "blue"
+		}
+
+	}
+	p.EyeColor = eyecolor
 }
