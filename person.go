@@ -67,15 +67,6 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 
 }
 
-func selectAllele(fatherAllele bool, motherAllele bool) bool {
-	pickP := rand.Float64()
-	if pickP <= .5 {
-		return fatherAllele
-	} else {
-		return motherAllele
-	}
-}
-
 func selectValue(ability string, fatherValue float64, motherValue float64) (float64, error) {
 	if fatherValue > 2 && motherValue > 2 {
 		if fatherValue >= motherValue {
