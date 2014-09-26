@@ -12,12 +12,7 @@ func main() {
 	for k := range trait1Father.Abilities {
 		keys = append(keys, k)
 	}
-	var keys2 []string
-	for k := range trait1Father.Alleles {
-		keys2 = append(keys2, k)
-	}
 	sort.Strings(keys)
-	sort.Strings(keys2)
 
 	trait2Father := GenerateTraits("Y")
 
@@ -28,11 +23,11 @@ func main() {
 	person1.Gender = "Y"
 	person2, _ := GeneratePerson(trait2Father, trait2Mother)
 	person2.Gender = "X"
-	PrintPerson("Father", person1, keys, keys2)
-	PrintPerson("Mother", person2, keys, keys2)
+	PrintPerson("Father", person1, keys)
+	PrintPerson("Mother", person2, keys)
 	for i := 0; i < 10; i++ {
 		if child, chldErr := Procreate(person1, person2); chldErr == nil {
-			PrintPerson(fmt.Sprintf("Child %v", i+1), child, keys, keys2)
+			PrintPerson(fmt.Sprintf("Child %v", i+1), child, keys)
 		} else {
 			fmt.Printf("----------\n")
 			fmt.Printf("Child %v, something didn't go right.\n%v\n", i+1, chldErr)
@@ -41,20 +36,12 @@ func main() {
 	}
 }
 
-func PrintPerson(name string, p Person, keys []string, key2 []string) {
+func PrintPerson(name string, p Person, keys []string) {
 	fmt.Printf("----------\n")
 	fmt.Println(name)
-	fmt.Printf("Eyes: %v\n", p.EyeColor)
-
-	for _, k := range key2 {
-		fmt.Printf("%v:%v  ", k, p.Alleles[k])
+	for _, k := range keys {
+		fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
+		//fmt.Printf("%v: %v \n", k, p.Abilities[k])
 	}
-	/*
-		for _, k := range keys {
-			//fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
-			_ = k
-			//fmt.Printf("%v: %v \n", k, p.Abilities[k])
-		}
-	*/
 	fmt.Println("Gender:", p.Gender)
 }
