@@ -25,7 +25,7 @@ func main() {
 	person2.Gender = "X"
 	PrintPerson("Father", person1, keys)
 	PrintPerson("Mother", person2, keys)
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 0; i++ {
 		if child, chldErr := Procreate(person1, person2); chldErr == nil {
 			PrintPerson(fmt.Sprintf("Child %v", i+1), child, keys)
 		} else {
