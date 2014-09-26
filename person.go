@@ -44,12 +44,23 @@ func (p *Person) GetContributionTraits() Trait {
 		}
 	}
 	for key, _ := range p.Father.Alleles {
-		pick := rand.Float64()
-		if pick <= .5 {
-			result.Alleles[key] = p.Father.Alleles[key]
+
+		pick1 := rand.Float64()
+		pick2 := rand.Float64()
+		chosen := Allele{}
+
+		if pick1 <= .5 {
+			chosen.Paternal = p.Father.Alleles[key].Paternal
 		} else {
-			result.Alleles[key] = p.Mother.Alleles[key]
+			chosen.Paternal = p.Father.Alleles[key].Maternal
 		}
+		if pick2 <= .5 {
+			chosen.Maternal = p.Mother.Alleles[key].Paternal
+		} else {
+			chosen.Maternal = p.Mother.Alleles[key].Maternal
+		}
+		p.Alleles[key] = chosen
+
 	}
 	if p.Gender == "X" {
 		result.Gender = "X"
