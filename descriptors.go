@@ -1,12 +1,49 @@
 package main
 
+import "sort"
+
 func (p *Person) Describe() []string {
-	result := make([]string, len(p.Abilities))
+	result := make([]string, 0)
+	keys := sortedKeys(p.Abilities)
+
+	for _, v := range keys {
+		result = append(result, getAbilityDescription(v, p.Abilities[v]))
+	}
 
 	return result
 }
 
-func abilityDescription(ability string, value float64) string {
+type sortedMap struct {
+	m map[string]float64
+	s []string
+}
+
+func (sm *sortedMap) Len() int {
+	return len(sm.m)
+}
+
+func (sm *sortedMap) Less(i, j int) bool {
+	return sm.m[sm.s[i]] > sm.m[sm.s[j]]
+}
+
+func (sm *sortedMap) Swap(i, j int) {
+	sm.s[i], sm.s[j] = sm.s[j], sm.s[i]
+}
+
+func sortedKeys(m map[string]float64) []string {
+	sm := new(sortedMap)
+	sm.m = m
+	sm.s = make([]string, len(m))
+	i := 0
+	for key, _ := range m {
+		sm.s[i] = key
+		i++
+	}
+	sort.Sort(sm)
+	return sm.s
+}
+
+func getAbilityDescription(ability string, value float64) string {
 	switch ability {
 	case "1_strength":
 		switch value {
