@@ -182,16 +182,20 @@ func GetValue() float64 {
 	rand.Seed(time.Now().UnixNano())
 	scoreType := float64(rand.Intn(10)) + 1.0
 	if scoreType == 1 {
-		key := rand.Intn(8)
+		key := rand.Intn(12)
 		multivals := make(map[int]float64)
-		multivals[0] = 0.25
-		multivals[1] = 0.5
-		multivals[2] = 0.75
-		multivals[3] = 1.0
-		multivals[4] = 1.25
-		multivals[5] = 1.5
-		multivals[6] = 1.75
-		multivals[7] = 2.0
+		multivals[0] = 0.3
+		multivals[1] = 0.4
+		multivals[2] = 0.5
+		multivals[3] = 0.6
+		multivals[4] = 0.7
+		multivals[5] = 0.8
+		multivals[6] = 0.9
+		multivals[7] = 1.0
+		multivals[8] = 1.1
+		multivals[9] = 1.2
+		multivals[10] = 1.3
+		multivals[11] = 1.4
 		return multivals[key]
 	} else {
 		return float64(rand.Intn(16)) + 3.0
