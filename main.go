@@ -41,6 +41,7 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Println(name)
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Hair Color: ", p.HairColor)
+	fmt.Printf("Height: %v ft.   %v in.", p.Height.Feet, p.Height.Inches)
 	fmt.Println("Description: ")
 	for _, v := range p.Describe() {
 		fmt.Println(v)

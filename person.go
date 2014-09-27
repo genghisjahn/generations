@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -13,11 +14,17 @@ type Trait struct {
 	Gender    string
 	EyeColor  string
 	HairColor string
+	Height    Height
 }
 
 type Allele struct {
 	Pos1 bool
 	Pos2 bool
+}
+
+type Height struct {
+	Feet   int
+	Inches int
 }
 
 func (a *Allele) Select() bool {
@@ -85,12 +92,26 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person.Gender = GetGender()
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
+	person.Height = getHeight(person.Gender, person.Abilities["1_strength"], person.Abilities["5_constitution"])
 	if errText == "" {
 		return person, nil
 	} else {
 		return person, errors.New(errText)
 	}
 
+}
+
+func getHeight(gender string, strength float64, constitution float64) Height {
+	result := Height{}
+	totalinches := (48.0 + strength + constitution)
+	if gender == "X" {
+		totalinches = totalinches * 0.9
+	}
+	feet, _ := math.Modf(totalinches / 12.0)
+	inches := math.Mod(totalinches, 12.0)
+	result.Feet = int(feet)
+	result.Inches = int(inches)
+	return result
 }
 
 func getHairColor(hc1 Allele, hc2 Allele) string {
