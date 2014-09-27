@@ -117,9 +117,9 @@ func getEyeColor(ec1 Allele, ec2 Allele) string {
 		result = "Brown"
 	} else {
 		if ec2.Pos1 || ec2.Pos2 {
-			result = "Blue"
-		} else {
 			result = "Green"
+		} else {
+			result = "Blue"
 		}
 	}
 	return result
