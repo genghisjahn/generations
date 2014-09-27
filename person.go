@@ -19,13 +19,13 @@ type Allele struct {
 	Pos2 bool
 }
 
-func SelectAllele(allele Allele) bool {
+func (a *Allele) Select() bool {
 	rand.Seed(time.Now().UnixNano())
 	pick := rand.Float64()
 	if pick < .5 {
-		return allele.Pos1
+		return a.Pos1
 	}
-	return allele.Pos2
+	return a.Pos2
 }
 
 type Person struct {
@@ -78,7 +78,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	for key, _ := range fatherTrait.Alleles {
 		fatherAllele := fatherTrait.Alleles[key]
 		motherAllel := motherTrait.Alleles[key]
-		newAllele := Allele{Pos1: SelectAllele(fatherAllele), Pos2: SelectAllele(motherAllel)}
+		newAllele := Allele{Pos1: fatherAllele.Select(), Pos2: motherAllel.Select()}
 		person.Alleles[key] = newAllele
 	}
 	person.Gender = GetGender()
