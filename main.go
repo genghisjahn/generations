@@ -25,6 +25,7 @@ func main() {
 	person2.Gender = "X"
 	PrintPerson("Father", person1, keys)
 	PrintPerson("Mother", person2, keys)
+
 	for i := 0; i < 10; i++ {
 		if child, chldErr := Procreate(person1, person2); chldErr == nil {
 			PrintPerson(fmt.Sprintf("Child %v", i+1), child, keys)
@@ -40,9 +41,15 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Println(name)
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Hair Color: ", p.HairColor)
-	for _, k := range keys {
-		fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
-		//fmt.Printf("%v: %v \n", k, p.Abilities[k])
+	fmt.Println("Description: ")
+	for _, v := range p.Describe() {
+		fmt.Println(v)
 	}
+	/*
+		for _, k := range keys {
+			fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
+			//fmt.Printf("%v: %v \n", k, p.Abilities[k])
+		}
+	*/
 	fmt.Println("Gender:", p.Gender)
 }
