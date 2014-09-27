@@ -19,13 +19,13 @@ type Allele struct {
 	Pos2 bool
 }
 
-func (a *Allele) Select() bool {
+func SelectAllele(allele Allele) bool {
 	rand.Seed(time.Now().UnixNano())
 	pick := rand.Float64()
 	if pick < .5 {
-		return a.Pos1
+		return allele.Pos1
 	}
-	return a.Pos2
+	return allele.Pos2
 }
 
 type Person struct {
@@ -52,14 +52,7 @@ func (p *Person) GetContributionTraits() Trait {
 			result.Abilities[key] = p.Mother.Abilities[key]
 		}
 	}
-	for key, _ := range p.Father.Alleles {
-		currentAllele := Allele{}
-		paternalAllele := p.Father.Alleles[key]
-		maternalAllele := p.Mother.Alleles[key]
-		currentAllele.Pos1 = paternalAllele.Select()
-		currentAllele.Pos1 = maternalAllele.Select()
-		result.Alleles[key] = currentAllele
-	}
+	result.Alleles = p.Alleles
 	if p.Gender == "X" {
 		result.Gender = "X"
 	} else {
@@ -85,7 +78,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	for key, _ := range fatherTrait.Alleles {
 		fatherAllele := fatherTrait.Alleles[key]
 		motherAllel := motherTrait.Alleles[key]
-		newAllele := Allele{Pos1: fatherAllele.Select(), Pos2: motherAllel.Select()}
+		newAllele := Allele{Pos1: SelectAllele(fatherAllele), Pos2: SelectAllele(motherAllel)}
 		person.Alleles[key] = newAllele
 	}
 	person.Gender = GetGender()
@@ -101,12 +94,12 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 func getEyeColor(ec1 Allele, ec2 Allele) string {
 	result := ""
 	if ec1.Pos1 || ec1.Pos2 {
-		result = "brown"
+		result = "Brown"
 	} else {
 		if ec2.Pos1 || ec2.Pos2 {
-			result = "blue"
+			result = "Blue"
 		} else {
-			result = "green"
+			result = "Green"
 		}
 	}
 	return result
