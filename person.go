@@ -12,6 +12,7 @@ type Trait struct {
 	Alleles   map[string]Allele
 	Gender    string
 	EyeColor  string
+	HairColor string
 }
 
 type Allele struct {
@@ -83,6 +84,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	}
 	person.Gender = GetGender()
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
+	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	if errText == "" {
 		return person, nil
 	} else {
@@ -91,15 +93,33 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 
 }
 
+func getHairColor(hc1 Allele, hc2 Allele) string {
+	result := ""
+	if hc1.Pos1 && hc1.Pos2 {
+		result = "Black"
+	} else {
+		if hc1.Pos1 || hc1.Pos1 {
+			result = "Brown"
+		} else {
+			if hc2.Pos1 || hc2.Pos2 {
+				result = "Blonde"
+			} else {
+				result = "Red"
+			}
+		}
+	}
+	return result
+}
+
 func getEyeColor(ec1 Allele, ec2 Allele) string {
 	result := ""
 	if ec1.Pos1 || ec1.Pos2 {
 		result = "Brown"
 	} else {
 		if ec2.Pos1 || ec2.Pos2 {
-			result = "Blue"
-		} else {
 			result = "Green"
+		} else {
+			result = "Blue"
 		}
 	}
 	return result
@@ -137,6 +157,8 @@ func GenerateTraits(gender string) Trait {
 	trait.Alleles = make(map[string]Allele)
 	trait.Alleles["ec1"] = GenerateAllele()
 	trait.Alleles["ec2"] = GenerateAllele()
+	trait.Alleles["hc1"] = GenerateAllele()
+	trait.Alleles["hc2"] = GenerateAllele()
 
 	trait.Gender = gender
 	return trait
