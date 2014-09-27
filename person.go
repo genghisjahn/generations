@@ -71,6 +71,7 @@ func (p *Person) GetContributionTraits() Trait {
 func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person := Person{}
 	person.Abilities = make(map[string]float64)
+	person.Alleles = make(map[string]Allele)
 	person.Father = fatherTrait
 	person.Mother = motherTrait
 	errText := ""
@@ -81,13 +82,34 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 		}
 
 	}
+	for key, _ := range fatherTrait.Alleles {
+		fatherAllele := fatherTrait.Alleles[key]
+		motherAllel := motherTrait.Alleles[key]
+		newAllele := Allele{Pos1: fatherAllele.Select(), Pos2: motherAllel.Select()}
+		person.Alleles[key] = newAllele
+	}
 	person.Gender = GetGender()
+	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	if errText == "" {
 		return person, nil
 	} else {
 		return person, errors.New(errText)
 	}
 
+}
+
+func getEyeColor(ec1 Allele, ec2 Allele) string {
+	result := ""
+	if ec1.Pos1 || ec1.Pos2 {
+		result = "brown"
+	} else {
+		if ec2.Pos1 || ec2.Pos2 {
+			result = "blue"
+		} else {
+			result = "green"
+		}
+	}
+	return result
 }
 
 func selectValue(ability string, fatherValue float64, motherValue float64) (float64, error) {

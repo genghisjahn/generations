@@ -39,6 +39,8 @@ func main() {
 func PrintPerson(name string, p Person, keys []string) {
 	fmt.Printf("----------\n")
 	fmt.Println(name)
+	fmt.Println("Eye Color: ", p.EyeColor)
+	fmt.Println("Eye GType:", p.Alleles["ec1"], p.Alleles["ec2"])
 	for _, k := range keys {
 		fmt.Printf("%v: %v F:%v M:%v\n", k, p.Abilities[k], p.Father.Abilities[k], p.Mother.Abilities[k])
 		//fmt.Printf("%v: %v \n", k, p.Abilities[k])
