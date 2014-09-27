@@ -206,3 +206,179 @@ func GetGender() string {
 		return "X"
 	}
 }
+
+func (p *Person) Describe() []string {
+	result := make([]string, len(p.Abilities))
+
+	return result
+}
+
+func abilityDescription(ability string, value float64) string {
+	switch ability {
+	case "1_strength":
+		switch value {
+		case 1:
+			return "Morbidly weak, has significant trouble lifting own limbs."
+		case 2, 3:
+			return "Needs help to stand, can be knocked over by strong breezes."
+		case 4, 5:
+			return "Knocked off balance by swinging something dense."
+		case 6, 7:
+			return "Difficulty pushing an object of their weight."
+		case 8, 9:
+			return "Has trouble even lifting heavy objects."
+		case 10, 11:
+			return "Can literally pull their own weight."
+		case 12, 13:
+			return "Carries heavy objects for short distances."
+		case 14, 15:
+			return "Visibly toned, throws small objects for long distances."
+		case 16, 17:
+			return "Carries heavy objects with one arm."
+		case 18, 19:
+			return "Can break objects like wood with bare hands."
+		case 20, 21:
+			return "Able to out-wrestle a work animal or catch a falling person."
+		case 22, 23:
+			return "Can pull very heavy objects at appreciable speeds."
+		case 24, 25:
+			return "Pinnacle of brawn, able to out-lift several people."
+		}
+
+	case "2_intelligence":
+		switch value {
+		case 1:
+			return "Animalistic, no longer capable of logic or reason."
+		case 2, 3:
+			return "Barely able to function, very limited speech and knowledge."
+		case 4, 5:
+			return "Often resorts to charades to express thoughts."
+		case 6, 7:
+			return "Often misuses and mispronounces words."
+		case 8, 9:
+			return "Has trouble following trains of thought, forgets most unimportant things."
+		case 10, 11:
+			return "Knows what they need to know to get by."
+		case 12, 13:
+			return "Knows a bit more than is necessary, fairly logical."
+		case 14, 15:
+			return "Able to do math or solve logic puzzles mentally with reasonable accuracy."
+		case 16, 17:
+			return "Fairly intelligent, able to understand new tasks quickly."
+		case 18, 19:
+			return "Very intelligent, may invent new processes or uses for knowledge."
+		case 20, 21:
+			return "Highly knowledgeable, probably the smartest person many people know."
+		case 22, 23:
+			return "Able to make Holmesian leaps of logic."
+		case 24, 25:
+			return "Famous as a sage and genius."
+		}
+
+	}
+	return ""
+}
+
+/*
+Dexterity
+1 (–5): Barely mobile, probably significantly paralyzed
+2-3 (–4): Incapable of moving without noticeable effort or pain
+4-5 (–3): Visible paralysis or physical difficulty
+6-7 (–2): Significant klutz or very slow to react
+8-9 (–1): Somewhat slow, occasionally trips over own feet
+10-11 (0): Capable of usually catching a small tossed object
+12-13 (1): Able to often hit large targets
+14-15 (2): Can catch or dodge a medium-speed surprise projectile
+16-17 (3): Able to often hit small targets
+18-19 (4): Light on feet, able to often hit small moving targets
+20-21 (5): Graceful, able to flow from one action into another easily
+22-23 (6): Very graceful, capable of dodging a number of thrown objects
+24-25 (7): Moves like water, reacting to all situations with almost no effort
+Constitution
+1 (–5): Minimal immune system, body reacts violently to anything foreign
+2-3 (–4): Frail, suffers frequent broken bones
+4-5 (–3): Bruises very easily, knocked out by a light punch
+6-7 (–2): Unusually prone to disease and infection
+8-9 (–1): Easily winded, incapable of a full day’s hard labor
+10-11 (0): Occasionally contracts mild sicknesses
+12-13 (1): Can take a few hits before being knocked unconscious
+14-15 (2): Able to labor for twelve hours most days
+16-17 (3): Easily shrugs off most illnesses
+18-19 (4): Able to stay awake for days on end
+20-21 (5): Very difficult to wear down, almost never feels fatigue
+22-23 (6): Never gets sick, even to the most virulent diseases
+24-25 (7): Tireless paragon of physical endurance
+Intelligence
+1 (–5): Animalistic, no longer capable of logic or reason
+2-3 (–4): Barely able to function, very limited speech and knowledge
+4-5 (–3): Often resorts to charades to express thoughts
+6-7 (–2): Often misuses and mispronounces words
+8-9 (–1): Has trouble following trains of thought, forgets most unimportant things
+10-11 (0): Knows what they need to know to get by
+12-13 (1): Knows a bit more than is necessary, fairly logical
+14-15 (2): Able to do math or solve logic puzzles mentally with reasonable accuracy
+16-17 (3): Fairly intelligent, able to understand new tasks quickly
+18-19 (4): Very intelligent, may invent new processes or uses for knowledge
+20-21 (5): Highly knowledgeable, probably the smartest person many people know
+22-23 (6): Able to make Holmesian leaps of logic
+24-25 (7): Famous as a sage and genius
+Wisdom
+1 (–5): Seemingly incapable of thought, barely aware
+2-3 (–4): Rarely notices important or prominent items, people, or occurrences
+4-5 (–3): Seemingly incapable of forethought
+6-7 (–2): Often fails to exert common sense
+8-9 (–1): Forgets or opts not to consider options before taking action
+10-11 (0): Makes reasoned decisions most of the time
+12-13 (1): Able to tell when a person is upset
+14-15 (2): Can get hunches about a situation that doesn’t feel right
+16-17 (3): Reads people and situations fairly well
+18-19 (4): Often used as a source of wisdom or decider of actions
+20-21 (5): Reads people and situations very well, almost unconsciously
+22-23 (6): Can tell minute differences among many situations
+24-25 (7): Nearly prescient, able to reason far beyond logic
+Charisma
+1 (–5): Barely conscious, probably acts heavily autistic
+2-3 (–4): Minimal independent thought, relies heavily on others to think instead
+4-5 (–3): Has trouble thinking of others as people
+6-7 (–2): Terribly reticent, uninteresting, or rude
+8-9 (–1): Something of a bore or makes people mildly uncomfortable
+10-11 (0): Capable of polite conversation
+12-13 (1): Mildly interesting, knows what to say to the right people
+14-15 (2): Interesting, knows what to say to most people
+16-17 (3): Popular, receives greetings and conversations on the street
+18-19 (4): Immediately likeable by many people, subject of favorable talk
+20-21 (5): Life of the party, able to keep people entertained for hours
+22-23 (6): Immediately likeable by almost everybody
+24-25 (7): Renowned for wit, personality, and/or looks
+
+case "2_intelligence":
+		switch value {
+		case 1:
+			return ""
+		case 2, 3:
+			return ""
+		case 4, 5:
+			return ""
+		case 6, 7:
+			return ""
+		case 8, 9:
+			return ""
+		case 10, 11:
+			return ""
+		case 12, 13:
+			return ""
+		case 14, 15:
+			return ""
+		case 16, 17:
+			return ""
+		case 18, 19:
+			return ""
+		case 20, 21:
+			return ""
+		case 22, 23:
+			return ""
+		case 24, 25:
+			return ""
+		}
+
+*/
