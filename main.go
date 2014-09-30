@@ -40,6 +40,7 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Printf("----------\n")
 	fmt.Println(name)
 	fmt.Println("Hash:", p.GetHash())
+	fmt.Println("AvgScore:", p.AvgScore)
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Hair Color: ", p.HairColor)
 	fmt.Printf("Height: %v ft.   %v in.", p.Height.Feet, p.Height.Inches)

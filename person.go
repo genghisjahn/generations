@@ -19,6 +19,7 @@ type Trait struct {
 	EyeColor  string
 	HairColor string
 	Height    Height
+	AvgScore  float64
 }
 
 type Allele struct {
@@ -37,6 +38,14 @@ func (p *Person) GetHash() string {
 	h.Write([]byte(jsonbody))
 	hash := base64.StdEncoding.EncodeToString(h.Sum(nil))
 	return hash
+}
+
+func (p *Person) setAbilityAverage() float64 {
+	total := 0.0
+	for k, _ := range p.Abilities {
+		total += p.Abilities[k]
+	}
+	return total / float64(len(p.Abilities))
 }
 
 func (a *Allele) Select() bool {
@@ -102,6 +111,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 		person.Alleles[key] = newAllele
 	}
 	person.Gender = GetGender()
+	person.AvgScore = person.setAbilityAverage()
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.Height = getHeight(person.Gender, person.Abilities["1_strength"], person.Abilities["5_constitution"])
