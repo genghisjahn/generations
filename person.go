@@ -1,6 +1,10 @@
 package main
 
 import (
+	"crypto/hmac"
+	"crypto/sha512"
+	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math"
@@ -25,6 +29,14 @@ type Allele struct {
 type Height struct {
 	Feet   int
 	Inches int
+}
+
+func (p *Person) GetHash() string {
+	jsonbody, _ := json.Marshal(p)
+	h := hmac.New(sha512.New, nil)
+	h.Write([]byte(jsonbody))
+	hash := base64.StdEncoding.EncodeToString(h.Sum(nil))
+	return hash
 }
 
 func (a *Allele) Select() bool {
