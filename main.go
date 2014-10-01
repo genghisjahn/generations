@@ -43,10 +43,16 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Println("AvgScore:", p.AvgScore)
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Hair Color: ", p.HairColor)
-	fmt.Printf("Height: %v ft.   %v in.", p.Height.Feet, p.Height.Inches)
+	fmt.Printf("Height: %v ft.   %v in.\n", p.Height.Feet, p.Height.Inches)
+	for k, v := range p.Abilities {
+		fmt.Printf("%v: %v\n", k, v)
+	}
+
 	fmt.Println("Description: ")
 	for _, v := range p.Describe() {
 		fmt.Println(v)
 	}
+
 	fmt.Println("Gender:", p.Gender)
+	fmt.Println("Classes:", p.selectClasses())
 }
