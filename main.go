@@ -42,12 +42,14 @@ func PrintPerson(name string, p Person, keys []string) {
 	fmt.Println("Hash:", p.GetHash())
 	fmt.Println("AvgScore:", p.AvgScore)
 	fmt.Println("Eye Color: ", p.EyeColor)
+	fmt.Println("Vision:", p.Vision)
 	fmt.Println("Hair Color: ", p.HairColor)
 	fmt.Printf("Height: %v ft.   %v in.\n", p.Height.Feet, p.Height.Inches)
-	for k, v := range p.Abilities {
-		fmt.Printf("%v: %v\n", k, v)
-	}
-
+	/*
+		for k, v := range p.Abilities {
+			fmt.Printf("%v: %v\n", k, v)
+		}
+	*/
 	fmt.Println("Description: ")
 	for _, v := range p.Describe() {
 		fmt.Println(v)
