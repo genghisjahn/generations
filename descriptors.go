@@ -45,7 +45,7 @@ func sortedKeys(m map[string]float64) []string {
 
 func getAbilityDescription(ability string, value float64) string {
 	switch ability {
-	case "1_strength":
+	case STRENGTH:
 		switch value {
 		case 1:
 			return "Morbidly weak, has significant trouble lifting own limbs."
@@ -75,7 +75,7 @@ func getAbilityDescription(ability string, value float64) string {
 			return "Pinnacle of brawn, able to out-lift several people."
 		}
 
-	case "2_intelligence":
+	case INTELLIGENCE:
 		switch value {
 		case 1:
 			return "Animalistic, no longer capable of logic or reason."
@@ -104,7 +104,7 @@ func getAbilityDescription(ability string, value float64) string {
 		case 24, 25:
 			return "Famous as a sage and genius."
 		}
-	case "3_wisdom":
+	case WISDOM:
 		switch value {
 		case 1:
 			return "Seemingly incapable of thought, barely aware."
@@ -133,7 +133,7 @@ func getAbilityDescription(ability string, value float64) string {
 		case 24, 25:
 			return "Nearly prescient, able to reason far beyond logic."
 		}
-	case "4_dexterity":
+	case DEXTERITY:
 		switch value {
 		case 1:
 			return "Barely mobile, probably significantly paralyzed."
@@ -162,7 +162,7 @@ func getAbilityDescription(ability string, value float64) string {
 		case 24, 25:
 			return "Moves like water, reacting to all situations with almost no effort."
 		}
-	case "5_constitution":
+	case CONSTITUTION:
 		switch value {
 		case 1:
 			return "Minimal immune system, body reacts violently to anything foreign."
@@ -191,7 +191,7 @@ func getAbilityDescription(ability string, value float64) string {
 		case 24, 25:
 			return "Tireless paragon of physical endurance."
 		}
-	case "6_charisma":
+	case CHARISMA:
 		switch value {
 		case 1:
 			return "Barely conscious, probably acts heavily autistic."

@@ -123,7 +123,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person.AvgScore = person.setAbilityAverage()
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
-	person.Height = getHeight(person.Gender, person.Abilities["1_strength"], person.Abilities["5_constitution"])
+	person.Height = getHeight(person.Gender, person.Abilities[STRENGTH], person.Abilities[CONSTITUTION])
 	if errText == "" {
 		return person, nil
 	} else {
@@ -199,12 +199,12 @@ func selectValue(ability string, fatherValue float64, motherValue float64) (floa
 func GenerateTraits(gender string) Trait {
 	trait := Trait{}
 	trait.Abilities = make(map[string]float64)
-	trait.Abilities["1_strength"] = GetValue()
-	trait.Abilities["2_intelligence"] = GetValue()
-	trait.Abilities["3_wisdom"] = GetValue()
-	trait.Abilities["4_dexterity"] = GetValue()
-	trait.Abilities["5_constitution"] = GetValue()
-	trait.Abilities["6_charisma"] = GetValue()
+	trait.Abilities[STRENGTH] = GetValue()
+	trait.Abilities[INTELLIGENCE] = GetValue()
+	trait.Abilities[WISDOM] = GetValue()
+	trait.Abilities[DEXTERITY] = GetValue()
+	trait.Abilities[CONSTITUTION] = GetValue()
+	trait.Abilities[CHARISMA] = GetValue()
 
 	trait.Alleles = make(map[string]Allele)
 	trait.Alleles["ec1"] = GenerateAllele()
