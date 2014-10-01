@@ -27,6 +27,7 @@ type Trait struct {
 	Gender    string
 	EyeColor  string
 	HairColor string
+	Vision    string
 	Height    Height
 	AvgScore  float64
 }
@@ -123,6 +124,7 @@ func GeneratePerson(fatherTrait Trait, motherTrait Trait) (Person, error) {
 	person.AvgScore = person.setAbilityAverage()
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
+	person.Vision = getColorBlind(person.Alleles["ec1"], person.Alleles["ec2"], person.Gender)
 	person.Height = getHeight(person.Gender, person.Abilities[STRENGTH], person.Abilities[CONSTITUTION])
 	if errText == "" {
 		return person, nil
@@ -177,6 +179,23 @@ func getEyeColor(ec1 Allele, ec2 Allele) string {
 	return result
 }
 
+func getColorBlind(cb1 Allele, cb2 Allele, gender string) string {
+	//cb1 must be from father
+	//cb2 must be from mother
+	result := "Normal"
+	rgblind := "R/G color blind"
+	if gender == "X" {
+		if !cb1.Pos1 && !cb1.Pos2 && !cb2.Pos1 && !cb2.Pos2 {
+			result = rgblind
+		}
+	} else {
+		if !cb2.Pos1 && !cb2.Pos2 {
+			result = rgblind
+		}
+	}
+	return result
+}
+
 func selectValue(ability string, fatherValue float64, motherValue float64) (float64, error) {
 	if fatherValue > 2 && motherValue > 2 {
 		if fatherValue >= motherValue {
@@ -211,6 +230,9 @@ func GenerateTraits(gender string) Trait {
 	trait.Alleles["ec2"] = GenerateAllele()
 	trait.Alleles["hc1"] = GenerateAllele()
 	trait.Alleles["hc2"] = GenerateAllele()
+
+	trait.Alleles["cb1"] = GenerateAllele()
+	trait.Alleles["cb2"] = GenerateAllele()
 
 	trait.Gender = gender
 	return trait
