@@ -18,6 +18,13 @@ func getHairColor(hc1 Allele, hc2 Allele) string {
 	return result
 }
 
+func setDdAllele(allele Allele, dominant string, recessive string) string {
+	if allele.Pos1 || allele.Pos2 {
+		return dominant
+	}
+	return recessive
+}
+
 func getEyeColor(ec1 Allele, ec2 Allele) string {
 	result := ""
 	if ec1.Pos1 || ec1.Pos2 {
