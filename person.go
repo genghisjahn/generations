@@ -32,11 +32,6 @@ type Trait struct {
 	AvgScore  float64
 }
 
-type Allele struct {
-	Pos1 bool
-	Pos2 bool
-}
-
 type Height struct {
 	Feet   int
 	Inches int
@@ -56,15 +51,6 @@ func (p *Person) setAbilityAverage() float64 {
 		total += p.Abilities[k]
 	}
 	return total / float64(len(p.Abilities))
-}
-
-func (a *Allele) Select() bool {
-	rand.Seed(time.Now().UnixNano())
-	pick := rand.Float64()
-	if pick < .5 {
-		return a.Pos1
-	}
-	return a.Pos2
 }
 
 type Person struct {
