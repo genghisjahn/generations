@@ -20,15 +20,16 @@ var (
 )
 
 type Trait struct {
-	Name      string
-	Abilities map[string]float64
-	Alleles   map[string]Allele
-	Gender    string
-	EyeColor  string
-	HairColor string
-	Vision    string
-	Height    Height
-	AvgScore  float64
+	Name       string
+	Abilities  map[string]float64
+	Alleles    map[string]Allele
+	Gender     string
+	EyeColor   string
+	HairColor  string
+	Handedness string
+	Vision     string
+	Height     Height
+	AvgScore   float64
 }
 
 type Height struct {

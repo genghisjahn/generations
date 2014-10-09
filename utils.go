@@ -65,6 +65,7 @@ func GeneratePerson(name string, fatherTrait Trait, motherTrait Trait) (Person, 
 	person.EyeColor = getEyeColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.HairColor = getHairColor(person.Alleles["ec1"], person.Alleles["ec2"])
 	person.Vision = getColorBlind(person.Alleles["ec1"], person.Alleles["ec2"], person.Gender)
+	person.Handedness = setDdAllele(person.Alleles["h1"], "Right handed", "Left handed")
 	person.setHeight()
 	if errText == "" {
 		return person, nil
@@ -92,6 +93,8 @@ func GenerateTraits(gender string) Trait {
 
 	trait.Alleles["cb1"] = GenerateAllele()
 	trait.Alleles["cb2"] = GenerateAllele()
+
+	trait.Alleles["h1"] = GenerateAllele()
 
 	trait.Gender = gender
 	return trait

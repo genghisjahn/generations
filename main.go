@@ -28,6 +28,7 @@ func PrintPerson(p Person) {
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Vision:", p.Vision)
 	fmt.Println("Hair Color: ", p.HairColor)
+	fmt.Println("Handedness: ", p.Handedness)
 	fmt.Printf("Height: %v ft.   %v in.\n", p.Height.Feet, p.Height.Inches)
 
 	fmt.Println("Description: ")
