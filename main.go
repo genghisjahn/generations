@@ -24,7 +24,7 @@ func PrintPerson(p Person) {
 	fmt.Printf("----------\n")
 	fmt.Println(p.Name)
 	fmt.Println("Hash:", p.GetHash())
-	fmt.Println("AvgScore:", p.AvgScore)
+	fmt.Println("AvgScore:", fmt.Sprintf("%.2f", p.AvgScore))
 	fmt.Println("Eye Color: ", p.EyeColor)
 	fmt.Println("Vision:", p.Vision)
 	fmt.Println("Hair Color: ", p.HairColor)
